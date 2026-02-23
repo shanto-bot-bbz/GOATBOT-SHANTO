@@ -14,7 +14,7 @@ module.exports = {
   },
 
   onStart: async function ({ message, args, api, event }) {
-    const permission = ["61588594672255"];
+    const permission = ["61588621109912"];
     if (!permission.includes(event.senderID)) {
       return api.sendMessage("─꯭𓆩𝆠꯭፝֟𝐀𝐑𝐄 𝐘𝐎𝐔 𝐂𝐑𝐀𝐙𝐘 𝐎𝐍𝐋𝐘 𝐒𝐇𝐀𝐍𝐓𝐎 𝐁𝐎𝐒𝐒 𝐏𝐄𝐑𝐌𝐈𝐒𝐒𝐈𝐎𝐍 𝐓𝐎 𝐔𝐒𝐄 𝐓𝐇𝐈𝐒 𝐂𝐌𝐃 𝐅𝐈𝐋𝐄𝆠꯭፝֟𓆪. ⚠️", event.threadID, event.messageID);
     }
