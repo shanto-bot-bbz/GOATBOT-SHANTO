@@ -31,9 +31,9 @@ module.exports = {
 
             
             if (isOnlyEmojis) {
-                const laughEmojis = ["😆", "🤣", "😂", "😹"];
-                const sadEmojis = ["🥺", "😭", "😿", "🥲"];
-                const annoyedEmojis = ["🙄", "😒"];
+                const laughEmojis = ["😆"];
+                const sadEmojis = ["🥹", "😭", "😿", ""];
+                const annoyedEmojis = ["", "😒"];
 
                 if (laughEmojis.some(emoji => msg.includes(emoji))) {
                     return message.reply({
@@ -49,7 +49,7 @@ module.exports = {
                 }
                 else if (annoyedEmojis.some(emoji => msg.includes(emoji))) {
                     return message.reply({
-                        attachment: await global.utils.getStreamFromURL("https://files.catbox.moe/wyoxmq.ogg"),
+                        attachment: await global.utils.getStreamFromURL("https://files.catbox.moe/07bw5k.mp3"),
                         body: "🙄"
                     });
                 }
