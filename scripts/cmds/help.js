@@ -30,7 +30,7 @@ function fontConvert(text, type = "command") {
 }
 
 function getCategoryEmoji(cat) {
-  return categoryEmoji?.[cat.toLowerCase()] || "🗂️";
+  return categoryEmoji?.[cat.toLowerCase()] || "🗃️";
 }
 
 function roleText(role) {
@@ -55,7 +55,7 @@ function findCommand(name) {
 module.exports = {
   config: {
     name: "help",
-    aliases: ["menu"],
+    aliases: ["hp"],
     version: "2.0",
     author: "Saimx69x | fixed by Aphelion",
     role: 0,
@@ -114,7 +114,7 @@ module.exports = {
       msg += `\n━━━━━━━━━━━━━━\n`;
       msg += `🔢 Total Commands: ${total}\n`;
       msg += `⚡ Prefix: ${prefix}\n`;
-      msg += `👑 Owner: Aphelion`;
+      msg += `👑 Owner: ShAnTo`;
 
       return message.reply(msg);
     }
