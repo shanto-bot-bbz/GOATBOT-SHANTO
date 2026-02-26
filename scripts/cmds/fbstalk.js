@@ -1,101 +1,133 @@
-const fs = require("fs");
-const request = require("request");
-
-
-function convert(time) {
-	const date = new Date(time);
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	const hours = date.getHours();
-	const minutes = date.getMinutes();
-	const seconds = date.getSeconds();
-	const formattedDate = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year}||${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
-	return formattedDate;
-}
-
-const headers = {
-	"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like) Version/12.0 eWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1",
-	"accept": "application/json, text/plain, /"
-};
+const axios = require('axios');
 
 module.exports = {
-	config: {
-		name: "fbstalk",
-		aliases: ["fbstalk"],
-		version: "1.0",
-		author: "Deku X kshitiz",
-		countDown: 5,
-		role: 0,
-		shortDescription: "Get info using uid/mention/reply to a message",
-		longDescription: {
-			en: "Get info using uid/mention/reply to a message",
-		},
-		category: "𝗜𝗡𝗙𝗢",
-		guide: {
-			en: "{pn}reply/uid/@mention",
-		},
-	},
+  config: {
+    name: "fbstalk",
+    version: "3.0",
+    author: "xnil6x",
+    role: 0,
+    shortDescription: "Advanced Facebook profile lookup",
+    longDescription: "Fetch Facebook profile info using UID, profile link, mention, or message reply",
+    category: "Utility",
+    guide: {
+      en: "{p}fbstalk [uid/link/mention/reply]"
+    }
+  },
 
-	onStart: async function ({ api, event, args }) {
-		let path = __dirname + `/cache/info.png`;
-		const token = "EAAGNO4a7r2wBO8ZAtzV0tSWkb8TX8YTnX2yW9vqi7NZAOkb58OzSYLZCOnEdebxIGuZBQrjFk6NqoLgcFUk0KPnatBY1gZBo2NGnNK3Y4MbIJlmYT6dyylzvZCxkZCZBERwxEclUyRIE07fJHwnHJmhZCbNC1f8nuboFt8vQpIOdb7fORwogidPT3uZB41MgZDZD"; // Replace with your Facebook access token
+  onStart: async function ({ message, api, event, args }) {
+    try {
+      const apiKey = "xnil69x"; // Replace with your actual API key
 
-		let id;
-		if (args.join().includes('@')) {
-			id = Object.keys(event.mentions)[0];
-		} else {
-			id = args[0] || event.senderID;
-		}
+      const formatInfo = (label, value) => {
+        if (!value || value === "not available") return "";
+        return `🔹 ${label}: ${value}\n`;
+      };
 
-		if (event.type === "message_reply") {
-			id = event.messageReply.senderID;
-		}
+      const formatArrayInfo = (label, array) => {
+        if (!Array.isArray(array) || array.length === 0) return "";
+        const items = array.map(item => item.name || item).join(', ');
+        return `🔹 ${label}: ${items}\n`;
+      };
 
-		try {
-			const resp = await axios.get(`https://graph.facebook.com/${id}?fields=id,is_verified,cover,created_time,work,hometown,username,link,name,locale,location,about,website,birthday,gender,relationship_status,significant_other,quotes,first_name,subscribers.limit(0)&access_token=${token}`, { headers });
+      const getUID = async (input) => {
+        if (/^\d+$/.test(input)) return input; // If input is a UID, return it directly
 
-			const name = resp.data.name;
-			const link_profile = resp.data.link;
-			const uid = resp.data.id;
-			const first_name = resp.data.first_name;
-			const username = resp.data.username || "No data!";
-			const created_time = convert(resp.data.created_time);
-			const web = resp.data.website || "No data!";
-			const gender = resp.data.gender;
-			const relationship_status = resp.data.relationship_status || "No data!";
-			const love = resp.data.significant_other || "No data!";
-			const bday = resp.data.birthday || "No data!";
-			const follower = resp.data.subscribers.summary.total_count || "No data!";
-			const is_verified = resp.data.is_verified;
-			const quotes = resp.data.quotes || "No data!";
-			const about = resp.data.about || "No data!";
-			const locale = resp.data.locale || "No data!";
-			const hometown = !!resp.data.hometown ? resp.data.hometown.name : "No Hometown";
-			const cover = resp.data.cover || "No Cover photo";
-			const avatar = `https://graph.facebook.com/${id}/picture?width=1500&height=1500&access_token=1174099472704185|0722a7d5b5a4ac06b11450f7114eb2e9`;
+        if (input.includes("facebook.com")) {
+          const username = input.match(/(?:https?:\/\/)?(?:www\.)?facebook\.com\/([^\/]+)/)?.[1];
+          if (username) {
+            const res = await axios.get(`https://xnilapi-glvi.onrender.com/xnil/fbstalk?username=${username}&key=${apiKey}`);
+            return res.data.success ? res.data.id : null;
+          }
+        }
 
+        if (input.startsWith("@")) {
+          const mention = Object.entries(event.mentions).find(([_, name]) => name === input.slice(1));
+          return mention ? mention[0] : null;
+        }
 
-			const cb = function () {
-				api.sendMessage({
-					body: `•——INFORMATION——•
-		Name: ${name}
-		First name: ${first_name}
-		Creation Date: ${created_time}
-		Profile link: ${link_profile}
-		Gender: ${gender}
-		Relationship Status: ${relationship_status}
-		Birthday: ${bday}
-		Follower(s): ${follower}
-		Hometown: ${hometown}
-		Locale: ${locale}
-		•——END——•`,
-					attachment: fs.createReadStream(path)
-				}, event.threadID, () => fs.unlinkSync(path), event.messageID);
-			};
-			request(encodeURI(avatar)).pipe(fs.createWriteStream(path)).on("close", cb);
-		} catch (err) {
-			api.sendMessage(`Error: ${err.message}`, event.threadID, event.messageID);
-		}
-	}
-};
+        return null;
+      };
+
+      let targetUID;
+
+      if (event.messageReply) {
+        targetUID = event.messageReply.senderID;
+      } else if (!args[0]) {
+        targetUID = event.senderID;
+      } else {
+        targetUID = await getUID(args[0]);
+      }
+
+      if (!targetUID) {
+        return message.reply("❌ Invalid input. Please provide a UID, profile link, mention, or reply to a message.");
+      }
+
+      api.sendMessage("🔍 Fetching profile information...", event.threadID);
+
+      const response = await axios.get(`https://xnilapi-glvi.onrender.com/xnil/fbstalk?uid=${targetUID}&key=${apiKey}`);
+      const user = response.data;
+
+      if (!user.success) {
+        return api.sendMessage("❌ Failed to fetch user data or profile is private", event.threadID);
+      }
+
+      let formattedInfo = `🌟 𝗖𝗢𝗠𝗣𝗟𝗘𝗧𝗘 𝗣𝗥𝗢𝗙𝗜𝗟𝗘 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡\n━━━━━━━━━━━━━━━━━━━━━\n`;
+
+      // Basic Info
+      formattedInfo += formatInfo("🆔 User ID", user.id);
+      formattedInfo += formatInfo("👤 Name", user.name);
+      formattedInfo += formatInfo("📛 Full Name", 
+        [user.first_name, user.middle_name, user.last_name].filter(Boolean).join(' '));
+      formattedInfo += formatInfo("🔗 Username", user.username);
+      formattedInfo += formatInfo("🌐 Profile Link", user.link);
+
+      // Personal Info
+      formattedInfo += formatInfo("📝 About", user.about);
+      formattedInfo += formatInfo("🎂 Birthday", user.birthday);
+      formattedInfo += formatInfo("👫 Gender", user.gender);
+      formattedInfo += formatInfo("💑 Relationship", user.relationship_status);
+      formattedInfo += formatInfo("📍 Location", user.location);
+      formattedInfo += formatInfo("🛕 Religion", user.religion);
+      formattedInfo += formatInfo("🏠 Hometown", user.hometown);
+
+      // Education
+      if (user.highSchoolName || user.collegeName) {
+        formattedInfo += `📚 𝗘𝗱𝘂𝗰𝗮𝘁𝗶𝗼𝗻:\n`;
+        formattedInfo += formatInfo("🏫 High School", user.highSchoolName);
+        formattedInfo += formatInfo("🎓 College", user.collegeName);
+      }
+
+      // Arrays
+      formattedInfo += formatArrayInfo("🗣️ Languages", user.languages);
+      formattedInfo += formatArrayInfo("⚽ Sports", user.sports);
+      formattedInfo += formatArrayInfo("🏆 Favorite Teams", user.favorite_teams);
+      formattedInfo += formatArrayInfo("🏅 Favorite Athletes", user.favorite_athletes);
+
+      // Additional Info
+      formattedInfo += formatInfo("👥 Followers", user.follower);
+      formattedInfo += formatInfo("📅 Account Created", 
+        user.created_time ? new Date(user.created_time).toLocaleString() : null);
+      formattedInfo += formatInfo("🔄 Last Updated", 
+        user.updated_time ? new Date(user.updated_time).toLocaleString() : null);
+
+      formattedInfo += `━━━━━━━━━━━━━━━━━━━━━`;
+
+      const attachments = [];
+      
+      if (user.picture) {
+        try {
+          const profilePic = await global.utils.getStreamFromURL(user.picture);
+          attachments.push(profilePic);
+        } catch (e) {
+          console.error("Failed to get profile picture:", e);
+        }
+      }
+
+      if (user.cover) {
+        try {
+          const coverPhoto = await global.utils.getStreamFromURL(user.cover);
+          attachments.push(coverPhoto);
+        } catch (e) {
+          console.error("Failed to get cover photo:", e);
+        }
+     
