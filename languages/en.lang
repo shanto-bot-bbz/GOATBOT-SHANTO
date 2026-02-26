@@ -99,7 +99,8 @@ handlerEvents.threadBanned=ᴛʜɪs ɢʳᴏᴜᴘ ʜᴀs ʙᴇᴇɴ ʙᴀɴɴᴇ
 handlerEvents.onlyAdminBox=ᴛʜɪs ɢʳᴏᴜᴘ ɪs ᴄᴜʀʀᴇɴᴛʟʏ ᴇɴᴀʙʟᴇᴅ ᴏɴʟʏ ɢʳᴏᴜᴘ ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs ᴄᴀɴ ᴜsᴇ ᴛʜᴇ ʙᴏᴛ
 handlerEvents.onlyAdminBot=❌ | ᴄᴜʀʀᴇɴᴛʟʏ ᴏɴʟʏ ʙᴏᴛ ᴀᴅᴍɪɴ ᴄᴀɴ ᴜsᴇ ʙᴏᴛ
 handlerEvents.commandNotFound=ᴄᴏᴍᴍᴀɴᴅ "%1" ᴅᴏᴇs ɴᴏᴛ ᴇxɪsᴛ, ᴛʏᴘᴇ %2ʜᴇʟᴘ ᴛᴏ sᴇᴇ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs
-handlerEvents.commandNotFound2=♻️ 𝐓𝐡𝐞 𝐂𝐨𝐦𝐦𝐚𝐧𝐝 𝐲𝐨𝐮 𝐀𝐫𝐞 𝐔𝐬𝐢𝐧𝐠 𝐃𝐨𝐞𝐬 𝐍𝐨𝐭 𝐄𝐱𝐢𝐬𝐭, 𝐓𝐲𝐩𝐞 %𝟏𝐡𝐞𝐥𝐩 𝐓𝐨 𝐒𝐞𝐞 𝐀𝐥𝐥 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬
+handlerEvents.commandNotFound2=♻️ 𝐘𝐞𝐬 𝐒𝐢𝐫, 𝐢 𝐚𝐦 𝐀𝐜𝐭𝐢𝐯𝐞 𝐏𝐥𝐞𝐚𝐬𝐞
+𝐭𝐞𝐥𝐥 𝐦𝐞 𝐇𝐨𝐰 𝐢 𝐜𝐚𝐧 𝐡𝐞𝐥𝐩 𝐘𝐨𝐮 🎀
 handlerEvents.commandSyntaxError=♻️ 𝐓𝐡𝐞 𝐂𝐨𝐦𝐦𝐚𝐧𝐝 𝐲𝐨𝐮 𝐀𝐫𝐞 𝐔𝐬𝐢𝐧𝐠 𝐢𝐬 𝐖𝐫𝐨𝐧𝐠 𝐒𝐲𝐧𝐭𝐚𝐱, 𝐏𝐥𝐞𝐚𝐬𝐞 𝐓𝐩𝐲𝐞 %𝟏𝐡𝐞𝐥𝐩 %𝟐 𝐓𝐨 𝐒𝐞𝐞 𝐓𝐡𝐞 𝐃𝐞𝐭𝐚𝐢𝐥𝐬 𝐎𝐟 𝐇𝐨𝐰 𝐓𝐨 𝐔𝐬𝐞 𝐓𝐡𝐢𝐬 𝐂𝐨𝐦𝐦𝐦𝐚𝐧𝐝𝐬
 handlerEvents.onlyAdmin=❌ | ᴏɴʟʏ ɢʳᴏᴜᴘ ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs ᴄᴀɴ ᴜsᴇ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ "%1"
 handlerEvents.onlyAdminToUseOnReply=❌ | ᴏɴʟʏ ɢʳᴏᴜᴘ ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs ᴄᴀɴ ᴜsᴇ ᴛʜᴇ ʀᴇᴘʟʏ ғᴜɴᴄᴛɪᴏɴ ᴏғ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ "%1"
