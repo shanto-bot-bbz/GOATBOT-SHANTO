@@ -1,4 +1,4 @@
-×cmd install gist.js const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const baseApiUrl = async () => {
@@ -8,7 +8,7 @@ const baseApiUrl = async () => {
 
 module.exports = {
   config: {
-    name: "gist",
+    name: "cf",
     version: "2.0",
     role: 1,
     author: "Saimx69x",
