@@ -16,7 +16,7 @@ module.exports.config = {
 };
 
 module.exports.onStart = async function ({ api, event, args }) {
-  const ownerIDs = ["100001611578438"];  // send your admin UID
+  const ownerIDs = ["100089927607228"];  // send your admin UID
   if (!ownerIDs.includes(event.senderID)) {
     return api.sendMessage("❌ | Only bot's admin can use the command", event.threadID, event.messageID);
   }
